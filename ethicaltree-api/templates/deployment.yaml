@@ -1,0 +1,124 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "ethicaltree-api.fullname" . }}
+  labels:
+    app: {{ template "ethicaltree-api.name" . }}
+    chart: {{ template "ethicaltree-api.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "ethicaltree-api.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "ethicaltree-api.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: myregistrykey
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: RAILS_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: rails_env
+            - name: AWS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: aws_api_key
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: aws_secret_key
+
+            - name: AWS_SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: aws_smtp_host
+
+            - name: AWS_SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: aws_smtp_password
+
+            - name: AWS_SMTP_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: aws_smtp_user_name
+
+            - name: DB_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: db_hostname
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: db_password
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: db_username
+
+            - name: GMAPS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: google_maps_api_key
+
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: secret_key_base
+
+            - name: WEBHOST
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: webhost
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

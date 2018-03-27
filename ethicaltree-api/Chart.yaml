@@ -1,0 +1,5 @@
+apiVersion: v1
+appVersion: "1.0"
+description: EthicalTree API
+name: ethicaltree-api
+version: 0.1.0
