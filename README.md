@@ -6,7 +6,7 @@ This is where we keep our helm charts and production kubernetes configs
 
 ## Architecture Diagram
 
-![Architecture Diagram](/ET_Infrastructure.svg?raw=true)
+![Architecture Diagram](/ET_Infrastructure.svg?raw=true&sanitize=true)
 
 ## MySql
 
