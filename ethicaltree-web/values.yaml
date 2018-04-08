@@ -1,11 +1,11 @@
-# Default values for ethicaltree-api.
+# Default values for ethicaltree-web.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: index.docker.io/applepicke/ethicaltree-api
+  repository: index.docker.io/applepicke/ethicaltree-web
   tag: latest
   pullPolicy: Always
 
@@ -22,11 +22,11 @@ ingress:
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
   path: /
   hosts:
-    - api.beta.ethicaltree.com
+    - beta.ethicaltree.com
   tls:
-    - secretName: ethicaltree-api-tls
+    - secretName: ethicaltree-web-tls
       hosts:
-        - api.beta.ethicaltree.com
+        - beta.ethicaltree.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

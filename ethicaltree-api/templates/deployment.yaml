@@ -20,7 +20,7 @@ spec:
         release: {{ .Release.Name }}
     spec:
       imagePullSecrets:
-        - name: myregistrykey
+        - name: docker-cloud
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -31,11 +31,13 @@ spec:
                 secretKeyRef:
                   name: ethicaltree-api
                   key: rails_env
+
             - name: AWS_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: ethicaltree-api
                   key: aws_api_key
+
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
@@ -89,12 +91,6 @@ spec:
                 secretKeyRef:
                   name: ethicaltree-api
                   key: secret_key_base
-
-            - name: WEBHOST
-              valueFrom:
-                secretKeyRef:
-                  name: ethicaltree-api
-                  key: webhost
 
           ports:
             - name: http
