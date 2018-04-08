@@ -5,13 +5,19 @@
 This is where we keep our helm charts and production kubernetes configs
 
 ## Architecture Diagram
-[![Architecture](https://raw.githubusercontent.com/applepicke/ethicaltree-kubernetes/ET\ Infrastructure.svg)](https://raw.githubusercontent.com/applepicke/ethicaltree-kubernetes/ET Infrastructure.svg)
+
+![Architecture Diagram](/ET_Infrastructure.svg?raw=true)
 
 ## MySql
 
 
 ```
+# Install MySql
 helm install --name ethicaltree-db -f ethicaltree-db/values.yaml stable/mysql --set myssqlUser={user} --set mysqlPassword={password}
+
+# Load Backup
+kubectl port-forward ethicaltree-db-mysql-{pod-id} 3306:3306
+mysql -u {user} -p{password} < backup.sql
 ```
 
 ## SSL (Let's Encrypt)
@@ -26,7 +32,11 @@ helm install --name kube-lego --namespace=kube-system stable/kube-lego --set con
 
 
 ```
+# Install
 helm install --name ethicaltree-api ./ethicaltree-api
+
+# Push new image
+helm upgrade --recreate-pods ethicaltree-api ./ethicaltree-api
 ```
 
 Make sure you set all the appropriate secrets
@@ -34,7 +44,11 @@ Make sure you set all the appropriate secrets
 ## EthicalTree Web
 
 ```
+# Install
 helm install --name ethicaltree-web ./ethicaltree-web
+
+# Push new image
+helm upgrade --recreate-pods ethicaltree-web ./ethicaltree-web
 ```
 
 
