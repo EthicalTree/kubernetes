@@ -1,6 +1,11 @@
 # EthicalTree Kubernetes
 
+[![EthicalTree Project](https://img.shields.io/badge/site-EthicalTree-blue.svg)](https://ethicaltree.com)
+
 This is where we keep our helm charts and production kubernetes configs
+
+## Architecture Diagram
+[![Architecture](https://raw.githubusercontent.com/applepicke/ethicaltree-kubernetes/ET\ Infrastructure.svg)](https://raw.githubusercontent.com/applepicke/ethicaltree-kubernetes/ET Infrastructure.svg)
 
 ## MySql
 
