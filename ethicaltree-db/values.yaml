@@ -71,9 +71,9 @@ resources:
 
 # Custom mysql configuration files used to override default mysql settings
 configurationFiles:
-#  mysql.cnf: |-
-#    [mysqld]
-#    skip-name-resolve
+  mysql.cnf: |-
+    [mysqld]
+    character-set-server=utf8mb4
 
 
 ## Configure the service
