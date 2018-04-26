@@ -1,0 +1,4 @@
+#!/bin/bash
+
+helm upgrade --recreate-pods ethicaltree-api ./ethicaltree-api
+helm upgrade --recreate-pods ethicaltree-sidekiq ./ethicaltree-api -f ethicaltree-sidekiq/values.yaml
