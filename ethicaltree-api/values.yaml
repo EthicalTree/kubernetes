@@ -22,11 +22,11 @@ ingress:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   path: /
   hosts:
-    - api.beta.ethicaltree.com
+    - api.ethicaltree.com
   tls:
-    - secretName: ethicaltree-api-tls
+    - secretName: ethicaltree-wildcard-tls
       hosts:
-        - api.beta.ethicaltree.com
+        - api.ethicaltree.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

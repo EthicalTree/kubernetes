@@ -8,6 +8,17 @@ This is where we keep our helm charts and production kubernetes configs
 
 ![Architecture Diagram](/ET_Infrastructure.svg?raw=true&sanitize=true)
 
+## SSL Certificates
+
+We use Let's Encrypt for our SSL Certificates. In order to update certificates, do the following:
+
+```
+docker run --rm -it -v "$PWD/letsencrypt":/etc/letsencrypt ubuntu:16.04 bash
+apt update
+wget https://dl.eff.org/certbot-auto
+chmod +x ./certbot-auto
+./certbot-auto renew
+```
 
 ## Docker Registry Setup
 
@@ -17,7 +28,6 @@ kubectl create secret docker-registry docker-cloud --docker-server=https://index
 
 
 ## MySql
-
 
 ```
 # Install MySql
@@ -42,16 +52,7 @@ helm install --name ethicaltree-redis stable/redis --set usePassword=true
 helm install --name nginx-ingress --namespace nginx-ingress stable/nginx-ingress --set rbac.create=true
 ```
 
-## SSL (Let's Encrypt)
-
-This chart will automatically get SSL certificates before the old ones expire
-
-```
-helm install --name kube-lego --namespace=kube-system stable/kube-lego --set config.LEGO_EMAIL={admin_email} --set config.LEGO_URL=https://acme-v01.api.letsencrypt.org/directory
-```
-
 ## EthicalTree API
-
 
 ```
 # Config
