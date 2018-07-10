@@ -59,7 +59,7 @@ persistence:
   # storageClass: "-"
   storageClass: digitalocean
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 100Gi
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
