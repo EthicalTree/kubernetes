@@ -92,6 +92,12 @@ spec:
                   name: ethicaltree-api
                   key: google_maps_api_key
 
+            - name: IPSTACK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ethicaltree-api
+                  key: ipstack_api_key
+
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
