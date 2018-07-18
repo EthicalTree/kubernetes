@@ -31,7 +31,7 @@ kubectl create secret docker-registry docker-cloud --docker-server=https://index
 
 ```
 # Install MySql
-helm install --name ethicaltree-db -f ethicaltree-db/values.yaml stable/mysql --set myssqlUser={user} --set mysqlPassword={password}
+helm install --name ethicaltree-db -f db/values.yaml stable/mysql --set myssqlUser={user} --set mysqlPassword={password}
 
 # Load Backup
 kubectl port-forward ethicaltree-db-mysql-{pod-id} 3306:3306
@@ -60,8 +60,8 @@ kubectl create secret generic ethicaltree-api
 kubectl edit secret ethicaltree-api
 
 # Install
-helm install --name ethicaltree-api ./ethicaltree-api
-helm install --name ethicaltree-sidekiq ./ethicaltree-api -f ethicaltree-sidekiq/values.yaml
+helm install --name ethicaltree-api ./api
+helm install --name ethicaltree-sidekiq ./api -f sidekiq/values.yaml
 
 # Push new image
 bin/deploy_api
@@ -73,12 +73,25 @@ Make sure you set all the appropriate secrets
 
 ```
 # Install
-helm install --name ethicaltree-web ./ethicaltree-web
+helm install --name ethicaltree-web ./web
 
 # Push new image
 bin/deploy_web
 ```
 
+## EthicalTree Blog
 
+#### Test locally
+
+```
+cd blog
+docker-compose up
+
+## Restore DB
+mysql -u root -h 127.0.0.1 -P3309 -p bitnami_wordpress < {et_backup}
+
+## Copy Assets
+cp -rf {backup_data} wordpress_data/
+```
 
 
