@@ -1,0 +1,12 @@
+rbac:
+  create: true
+
+controller:
+  config:
+    use-proxy-protocol: "true"
+
+  service:
+    externalTrafficPolicy: Local
+    type: NodePort
+
+

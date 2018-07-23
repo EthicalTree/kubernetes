@@ -1,0 +1,3 @@
+#!/bin/bash
+
+kubectl exec -it $(kubectl get pod -l app=commandcenter -o jsonpath="{.items[0].metadata.name}") zsh

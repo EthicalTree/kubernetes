@@ -1,0 +1,8 @@
+cluster:
+  enabled: false
+
+master:
+  persistence:
+    enabled: false
+  service:
+    type: ClusterIP

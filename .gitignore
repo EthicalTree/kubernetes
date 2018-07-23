@@ -1,4 +1,4 @@
 .DS_Store
 
-blog/mariadb_data
-blog/wordpress_data
+blog/development/mariadb_data
+blog/development/wordpress_data

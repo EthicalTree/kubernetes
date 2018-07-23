@@ -5,7 +5,27 @@ replicaCount: 3
 ##
 mariadb:
   ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
-  enabled: true
+  enabled: false
+
+wordpressTablePrefix: wpnn_
+
+externalDatabase:
+## All of these values are only used when mariadb.enabled is set to false
+  ## Database host
+  host: ethicaltree-db-mysql
+
+  ## non-root Username for Wordpress Database
+  user: et_blog
+
+  ## Database password
+  password: "jisI(h362Gygdk"
+
+  ## Database name
+  database: ethicaltree_blog
+
+  ## Database port number
+  port: 3306
+
 
 ## Kubernetes configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer or ClusterIP
@@ -22,7 +42,7 @@ serviceType: ClusterIP
 serviceExternalTrafficPolicy: Local
 
 ## Allow health checks to be pointed at the https port
-healthcheckHttps: false
+healthcheckHttps: true
 
 ## Configure extra options for liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
@@ -99,18 +119,16 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "digitalocean"
+  storageClass: "-"
   ##
   ## If you want to reuse an existing claim, you can pass the name of the PVC using
   ## the existingClaim variable
-  # existingClaim: your-claim
+  existingClaim: ethicaltree-blog-wordpress
   ##
   ## To use the /admin portal and to ensure you can scale wordpress you need to provide a
   ## ReadWriteMany PVC, if you dont have a provisioner for this type of storage
   ## We recommend that you install the nfs provisioner and map it to a RWO volume
   ## helm install stable/nfs-server-provisioner --set persistence.enabled=true,persistence.size=10Gi
-  accessMode: ReadWriteMany
-  size: 8Gi
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -123,7 +141,8 @@ resources:
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
-nodeSelector: {}
+nodeSelector:
+  blogstorage: 'true'
 
 ## Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

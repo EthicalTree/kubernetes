@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: commandcenter
+  labels:
+    app: commandcenter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commandcenter
+  template:
+    metadata:
+      labels:
+        app: commandcenter
+    spec:
+      nodeSelector:
+        blogstorage: 'true'
+      volumes:
+        - name: ethicaltree-blog
+          persistentVolumeClaim:
+           claimName: ethicaltree-blog-wordpress
+      containers:
+        - name: commandcenter
+          image: applepicke/commandcenter:latest
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do echo hello; sleep 10;done"]
+          volumeMounts:
+            - mountPath: "/mnt/blog"
+              name: ethicaltree-blog
+              readOnly: false
+          livenessProbe:
+            exec:
+              command:
+              - cat
+              - /etc/hosts
+            initialDelaySeconds: 5
+            periodSeconds: 5

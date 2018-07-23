@@ -30,7 +30,8 @@ imagePullPolicy: IfNotPresent
 
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-nodeSelector: {}
+nodeSelector:
+  dbstorage: 'true'
 
 livenessProbe:
   initialDelaySeconds: 30
@@ -57,9 +58,8 @@ persistence:
   ##   GKE, AWS & OpenStack)
   ##
   # storageClass: "-"
-  storageClass: digitalocean
-  accessMode: ReadWriteOnce
-  size: 100Gi
+  storageClass: "-"
+  existingClaim: ethicaltree-db-mysql
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/

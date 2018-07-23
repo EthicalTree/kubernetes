@@ -30,6 +30,9 @@ kubectl create secret docker-registry docker-cloud --docker-server=https://index
 ## MySql
 
 ```
+# Create Persistent Volume Claim (This will automatically provision a volume if it doesn't exist)
+kubectl create -f db/pvc.yaml
+
 # Install MySql
 helm install --name ethicaltree-db -f db/values.yaml stable/mysql --set myssqlUser={user} --set mysqlPassword={password}
 
@@ -42,14 +45,14 @@ mysql -u {user} -p{password} < backup.sql
 
 ```
 # Install Redis
-helm install --name ethicaltree-redis stable/redis --set usePassword=true
+helm install --name ethicaltree-redis -f redis/values.yaml stable/redis
 ```
 
 ## Nginx Ingress
 
 ```
 # Install Nginx
-helm install --name nginx-ingress --namespace nginx-ingress stable/nginx-ingress --set rbac.create=true
+helm install --name nginx-ingress --namespace nginx-ingress -f ingress/values.yaml stable/nginx-ingress
 ```
 
 ## EthicalTree API
@@ -80,6 +83,16 @@ bin/deploy_web
 ```
 
 ## EthicalTree Blog
+```
+# Create Persistent Volume Claim (volume will be created if it doesn't exist)
+kubectl create -f blog/pvc.yaml
+
+// The DB is shared with production ethicaltree.
+// Restore a backup there before installing the blog
+
+# Install
+helm install --name ethicaltree-blog -f blog/values.yaml stable/wordpress
+```
 
 #### Test locally
 
@@ -92,6 +105,14 @@ mysql -u root -h 127.0.0.1 -P3309 -p bitnami_wordpress < {et_backup}
 
 ## Copy Assets
 cp -rf {backup_data} wordpress_data/
+```
+
+# Command Center
+
+In order to test and maintain each system here, it's handy to have a pod preloaded with tools and volumes needed to help configure other systems.
+
+```
+kubectl create -f commandcenter/deployment.yaml
 ```
 
 
