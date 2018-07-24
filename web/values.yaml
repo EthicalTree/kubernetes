@@ -26,14 +26,11 @@ ingress:
     - www.ethicaltree.com
     - ethicaltree.com
   tls:
-    - secretName: ethicaltree-tls
+    - secretName: ethicaltree-wildcard-tls
       hosts:
         - ethicaltree.com
         - kingston.ethicaltree.com
         - www.ethicaltree.com
-    - secretName: ethicaltree-web-tls
-      hosts:
-        - beta.ethicaltree.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

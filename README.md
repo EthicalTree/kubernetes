@@ -17,7 +17,7 @@ docker run --rm -it -v "$PWD/letsencrypt":/etc/letsencrypt ubuntu:16.04 bash
 apt update
 wget https://dl.eff.org/certbot-auto
 chmod +x ./certbot-auto
-./certbot-auto renew
+certbot-auto certonly --agree-tos --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory -d "*.ethicaltree.com" -d "ethicaltree.com"
 ```
 
 ## Docker Registry Setup
