@@ -1,8 +1,21 @@
 cluster:
   enabled: false
 
+nodeSelector:
+  dbstorage: 'true'
+
 master:
   persistence:
     enabled: false
+
   service:
     type: ClusterIP
+
+metrics:
+  enabled: true
+  service:
+    type: ClusterIP
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9121"
+

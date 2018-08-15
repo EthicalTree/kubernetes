@@ -28,6 +28,16 @@ imageTag: "5.7.14"
 ##
 imagePullPolicy: IfNotPresent
 
+metrics:
+  enabled: true
+  image: prom/mysqld-exporter
+  imageTag: v0.10.0
+  imagePullPolicy: IfNotPresent
+  resources: {}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9104"
+
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 nodeSelector:
@@ -84,3 +94,4 @@ service:
   type: ClusterIP
   port: 3306
   # nodePort: 32000
+

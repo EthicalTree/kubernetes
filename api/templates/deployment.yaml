@@ -119,10 +119,10 @@ spec:
             httpGet:
               path: /status
               port: http
-          readinessProbe:
-            httpGet:
-              path: /status
-              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
           {{ end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}

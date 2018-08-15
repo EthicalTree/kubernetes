@@ -31,6 +31,7 @@ ingress:
         - ethicaltree.com
         - kingston.ethicaltree.com
         - www.ethicaltree.com
+        - ethicaltree.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

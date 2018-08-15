@@ -8,6 +8,16 @@ This is where we keep our helm charts and production kubernetes configs
 
 ![Architecture Diagram](/ET_Infrastructure.svg?raw=true&sanitize=true)
 
+## Labelling Nodes
+
+It is best to attach storage volumes to separate nodes. Deployments will be deployed on the node with their respective storage labels
+
+```
+kubectl label nodes {db_node} dbstorage=true
+kubectl label nodes {blog_node} blogstorage=true
+kubectl label nodes {monitoring_node} monitorstorage=true
+```
+
 ## SSL Certificates
 
 We use Let's Encrypt for our SSL Certificates. In order to update certificates, do the following:
@@ -25,6 +35,13 @@ certbot-auto certonly --agree-tos --manual --preferred-challenges dns --server h
 ```
 kubectl create secret docker-registry docker-cloud --docker-server=https://index.docker.io/v1/ --docker-username={username} --docker-password={api_key} --docker-email={email}
 ```
+
+## LoadBalancer
+
+- Create a new DigitalOcean node
+- Install HAProxy
+- Copy `./loadbalancer/haproxy.cfg` -> `/etc/haproxy/haproxy.cfg` on node
+- Replace `{ip_address}` for each kubernetes worker node in the cluster
 
 
 ## MySql
@@ -107,7 +124,16 @@ mysql -u root -h 127.0.0.1 -P3309 -p bitnami_wordpress < {et_backup}
 cp -rf {backup_data} wordpress_data/
 ```
 
-# Command Center
+## Monitoring (Prometheus + Grafana)
+
+
+```
+helm install --name prometheus --namespace monitoring -f monitoring/prometheus.yaml stable/prometheus
+helm install --name grafana --namespace monitoring -f monitoring/grafana.yaml stable/grafana
+```
+
+
+## Command Center
 
 In order to test and maintain each system here, it's handy to have a pod preloaded with tools and volumes needed to help configure other systems.
 
