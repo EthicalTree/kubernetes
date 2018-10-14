@@ -6,7 +6,7 @@ replicaCount: 5
 checkHealth: true
 
 image:
-  repository: index.docker.io/applepicke/ethicaltree-api
+  repository: index.docker.io/ethicaltree/api
   tag: latest
   pullPolicy: Always
 

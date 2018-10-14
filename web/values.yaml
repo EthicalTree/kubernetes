@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: index.docker.io/applepicke/ethicaltree-web
+  repository: index.docker.io/ethicaltree/web
   tag: latest
   pullPolicy: Always
 

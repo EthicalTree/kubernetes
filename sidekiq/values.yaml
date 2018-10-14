@@ -6,7 +6,7 @@ replicaCount: 1
 checkHealth: false
 
 image:
-  repository: index.docker.io/applepicke/ethicaltree-api
+  repository: index.docker.io/ethicaltree/api
   tag: latest
   pullPolicy: Always
   args: ["bundle", "exec", "sidekiq"]

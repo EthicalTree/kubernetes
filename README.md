@@ -24,10 +24,16 @@ We use Let's Encrypt for our SSL Certificates. In order to update certificates, 
 
 ```
 docker run --rm -it -v "$PWD/letsencrypt":/etc/letsencrypt ubuntu:16.04 bash
-apt update
+apt update && apt install wget
 wget https://dl.eff.org/certbot-auto
 chmod +x ./certbot-auto
 certbot-auto certonly --agree-tos --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory -d "*.ethicaltree.com" -d "ethicaltree.com"
+
+base64 ./letsencrypt/live/ethicaltree.com/fullchain.pem
+base64 ./letsencrypt/live/ethicaltree.com/privkey.pem
+
+# replace existing values with ones from two prev commands
+kubectl edit secret ethicaltree-wildcard-tls
 ```
 
 ## Docker Registry Setup
