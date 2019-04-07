@@ -34,6 +34,9 @@ base64 ./letsencrypt/live/ethicaltree.com/privkey.pem
 
 # replace existing values with ones from two prev commands
 kubectl edit secret ethicaltree-wildcard-tls
+
+# copy new creds to other namespaces ("monitoring" in the example)
+kubectl get secret ethicaltree-wildcard-tls --export -o yaml | kubectl apply --namespace=monitoring -f -
 ```
 
 ## Docker Registry Setup
