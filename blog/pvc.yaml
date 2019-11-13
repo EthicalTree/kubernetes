@@ -4,7 +4,8 @@ metadata:
   name: ethicaltree-blog-wordpress
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 8Gi
+  storageClassName: do-block-storage
